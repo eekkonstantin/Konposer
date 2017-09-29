@@ -1,0 +1,373 @@
+<html>
+  <head>
+    <title>Konposer</title>
+
+    <link rel="stylesheet" type="text/css" href="style/jquery-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/sheet.css" />
+    <link rel="stylesheet" type="text/css" href="style/keyboard.css" />
+    <link rel="stylesheet" type="text/css" href="style/main.css" />
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script/jquery-3.1.1.min.js"></script>
+    <script src="script/jquery-ui.min.js"></script>
+    <script src="script/Base64binary.js"></script>
+    <script src="script/MIDI.js"></script>
+    <script src="script/setup.js"></script>
+    <script src="script/socketfn.js"></script>
+  </head>
+  <body>
+    <!-- other ad-hoc elements -->
+    <div id="modal-room" class="modal">
+      <div class="modal-content">
+        Room Name<br>
+        <input type="text" id="input-room" value="nutjob" autocapitalize="word" /><br>
+        Username<br>
+        <input type="text" id="input-user" placeholder="Your name here!" autocapitalize="word" /><br>
+        <button type="submit" id="button-room">Join</button>
+      </div>
+    </div>
+    <div id="modal-sound" class="modal">
+      <div class="modal-content">
+        Loading instruments.<br>Please wait...
+        <p>(Please ensure JavaScript is on!)</p>
+      </div>
+    </div>
+    <div id="modal-note" class="modal">
+      <div class="modal-content">
+        Note Placement Error
+      </div>
+    </div>
+    <div id="modal-edit" class="modal">
+      <div class="modal-content">
+        Editable Content Error
+      </div>
+    </div>
+
+    <article id="dragmenote" class="elem-note">
+      <p>VALUE</p>
+      <article class="ui-icon ui-icon-trash note-delete"></article>
+      <article class="note-tt">
+        Added by <p>Kon</p>
+      </article>
+    </article>
+
+
+
+    <!-- DISPLAY -->
+    <div class="row" id="span-sheet">
+      <!-- area to hold sheet music part -->
+      <div class="row span-sheet" id="span-header">
+
+        <div class="block span-header" id="elem-help">
+          Room: <p id="roomName">&nbsp;</p>
+
+            <img src="style/images/info.png" id="elem-helpBtn" height="15em"/><br>
+          <!-- &nbsp;Click here for help! -->
+          User: <p id="userName">&nbsp;</p><br>
+        </div>
+        <h1 contenteditable="true" id="elem-title" data-tied="tt-title">Title</h1>
+        <div class="block span-header" id="elem-author" contenteditable="true" data-tied="tt-author">
+          Author/BPM
+        </div>
+
+      </div>
+
+      <div class="tooltip" id="tt-flash">
+        <!-- for flash messages (login) -->
+        Flash
+      </div>
+      <div class="tooltip user-tt" id="tt-title">
+        <!-- title area -->
+        Editing Title: <p></p>
+      </div>
+      <div class="tooltip user-tt" id="tt-author">
+        <!-- author area -->
+        Editing Freetext: <p></p>
+      </div>
+
+
+      <div class="tooltip" id="tt-log">
+        <!-- changelog area -->
+        Online:&nbsp;<p id="log-users"></p>
+        <center style="font-size: 120%;margin-top:15px;margin-bottom:5px;">Logs</center>
+        <div id="log-changes"> </div>
+      </div>
+
+
+      <!-- SYSTEMS -->
+      Drag notes here from the keyboard below to create music! You can control the pitch by adjusting the slider above the keyboard.<br><br>
+      <div class="row span-sheet" id="span-music" data-numrows=8>
+        <!-- area to hold sheet music -->
+        <section class="elem span-system" data-row=1>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=2>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1></section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=3>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=4>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=5>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=6>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=7>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+
+        <section class="elem span-system" data-row=8>
+          <!-- System: holds 8 beats in 4/4 time -->
+          <section class="elem col-chord" data-notes=0 data-col=1>
+          </section>
+          <section class="elem col-chord" data-notes=0 data-col=2></section>
+          <section class="elem col-chord" data-notes=0 data-col=3></section>
+          <section class="elem col-chord" data-notes=0 data-col=4></section>
+          <section class="elem col-chord" data-notes=0 data-col=5></section>
+          <section class="elem col-chord" data-notes=0 data-col=6></section>
+          <section class="elem col-chord" data-notes=0 data-col=7></section>
+          <section class="elem col-chord" data-notes=0 data-col=8></section>
+        </section>
+      </div>
+
+
+    </div>
+
+
+    <div class="row" id="span-expand">
+      Click to expand/collapse
+      <!-- <article id="elem-expand" class="ui-icon ui-icon-caret-2-n-s"></article> -->
+    </div>
+
+
+    <div class="row" id="span-notes">
+      <!-- area to hold instruments selector & keyboard-->
+      <div class="row span-notes" id="span-instr">
+        <!-- instrument tab controls -->
+        <div class="elem span-instr" id="pianoTab" data-tied="instr-piano">
+          <img class="elem-instr" draggable="false" src="style/images/piano1.png"/>
+        </div>
+        <div class="elem span-instr inactive" id="guitarTab" data-tied="instr-guitar">
+          <img class="elem-instr" draggable="false" src="style/images/guitar1.png"/>
+          </div>
+        <div class="elem span-instr inactive" id="otherTab" data-tied="instr-other">
+          <img class="elem-instr" draggable="false" src="style/images/xylo1.png"/>
+        </div>
+        <div class="elem span-instr inactive" id="functionsTab" data-tied="instr-functions">
+          <img class="elem-instr" draggable="false" src="style/images/cock.png"/>
+        </div>
+      </div>
+
+      <!-- PIANO -->
+      <div class="span-instrTab" id="instr-piano">
+        <div class="row span-notes span-octave" id="span-octaveKB">
+          <!-- area to hold octave slider part -->
+          <div class="elem-octave" id="elem-octave-sliderKB">
+            <div id="elem-octave-handleKB" class="ui-slider-handle octave-handle"></div>
+          </div>
+        </div>
+
+        <div class="row span-notes" id="span-keyb">
+          <!-- area to hold notes selector part -->
+          <div class="row span-keyb" id="span-bw">
+            <div class="span-bw blank"></div>
+            <div class="span-bw white L" data-key="C">
+              <!-- C -->
+            </div>
+            <div class="span-bw black" data-key="Db">
+              <!-- Db -->
+              Db
+            </div>
+            <div class="span-bw white M" data-key="D">
+              <!-- D -->
+            </div>
+            <div class="span-bw black" data-key="Eb">
+              <!-- Eb -->
+              Eb
+            </div>
+            <div class="span-bw white R" data-key="E">
+              <!-- E -->
+            </div>
+            <div class="span-bw white L" data-key="F">
+              <!-- F -->
+            </div>
+            <div class="span-bw black" data-key="Gb">
+              <!-- Gb -->
+              Gb
+            </div>
+            <div class="span-bw white M" data-key="G">
+              <!-- G -->
+            </div>
+            <div class="span-bw black" data-key="Ab">
+              <!-- Ab -->
+              Ab
+            </div>
+            <div class="span-bw white M" data-key="A">
+              <!-- A -->
+            </div>
+            <div class="span-bw black" data-key="Bb">
+              <!-- Bb -->
+              Bb
+            </div>
+            <div class="span-bw white R" data-key="B">
+              <!-- B -->
+            </div>
+          </div><!-- end span-bw -->
+
+          <div class="row span-keyb" id="span-w">
+            <div class="span-bw blank"></div>
+            <div class="span-w L white" data-key="C">
+              <!-- C -->
+              C
+            </div>
+            <div class="span-w M white" data-key="D">
+              <!-- D -->
+              D
+            </div>
+            <div class="span-w R white" data-key="E">
+              <!-- E -->
+              E
+            </div>
+            <div class="span-w L white" data-key="F">
+              <!-- F -->
+              F
+            </div>
+            <div class="span-w M white" data-key="G">
+              <!-- G -->
+              G
+            </div>
+            <div class="span-w M white" data-key="A">
+              <!-- A -->
+              A
+            </div>
+            <div class="span-w R white" data-key="B">
+              <!-- B -->
+              B
+            </div>
+          </div><!-- end span-w -->
+        </div>
+      </div>
+
+      <!-- GUITAR -->
+      <div class="span-instrTab" id="instr-guitar">
+        <div class="row span-notes span-octave" id="span-octaveGT">
+          <!-- area to hold octave slider part -->
+          <div class="elem-octave" id="elem-octave-sliderGT">
+            <div id="elem-octave-handleGT" class="ui-slider-handle octave-handle"></div>
+          </div>
+        </div>
+
+        <div class="row span-notes" id="span-keyb">
+          <!-- area to hold notes selector part -->
+          Keyboard
+        </div>
+      </div>
+
+      <!-- OTHER -->
+      <div class="span-instrTab" id="instr-other">
+        <div class="row span-notes span-octave" id="span-octaveOT">
+          <!-- octave slider -->
+          <div class="elem-octave" id="elem-octave-sliderOT">
+            <div id="elem-octave-handleOT" class="ui-slider-handle octave-handle"></div>
+          </div>
+        </div>
+
+        <div class="row span-notes" id="span-keyb">
+          <!-- area to hold notes selector part -->
+          Keyboard
+        </div>
+      </div>
+
+      <div class="span-instrTab" id="instr-functions">
+        <article class="span instr-functions" id="span-play">
+          <!-- Play Button -->
+          <img src="style/images/play.png" id="elem-playBtn" height="30%" draggable="false" data-fn="play" />
+        </article>
+        <article class="span instr-functions" id="span-speed">
+          <!-- Playback Speed -->
+          <p>Adjust the tempo (speed) here, then press play! A higher tempo plays each note faster.</p>
+          <div class="elem-pbSpeed" id="elem-pbSpeed-slider">
+            <div id="elem-pbSpeed-handle" class="ui-slider-handle"></div>
+          </div>
+        </article>
+        <article class="span instr-functions" id="span-download">
+          <img src="style/images/download.png" id="elem-dlBtn" height="30%" draggable="false" data-fn="download" />
+        </article>
+
+      </div>
+    </div>
+
+  </body>
+</html>
