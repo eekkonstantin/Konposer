@@ -1,3 +1,11 @@
+/*
+ * Copyright 2016 kkontagion
+ * Contact: eekkonstantin@gmail.com
+ *
+ * This file is part of the Konposer project, under GNU GPLv3.
+ * The files in the project are free for distribution, modification, and commercial use.
+ * Any use of this file must have the copyright and license notices preserved.
+ */
 $(document).ready(function() {
   $("div.row#span-notes > .span-instrTab#instr-piano").show();
 

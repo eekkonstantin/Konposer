@@ -1,3 +1,12 @@
+/*
+ * Copyright 2016 kkontagion
+ * Contact: eekkonstantin@gmail.com
+ *
+ * This file is part of the Konposer project, under GNU GPLv3.
+ * The files in the project are free for distribution, modification, and commercial use.
+ * Any use of this file must have the copyright and license notices preserved.
+ */
+
 var noteKeys = { "C9": 0x78, "B8": 0x77, "Bb8": 0x76, "A8": 0x75, "Ab8": 0x74,
 "G8": 0x73, "Gb8": 0x72, "F8": 0x71, "E8": 0x70, "Eb8": 0x6F, "D8": 0x6E, "Db8": 0x6D,
 "C8": 0x6C, "B7": 0x6B, "Bb7": 0x6A, "A7": 0x69, "Ab7": 0x68, "G7": 0x67, "Gb7": 0x66,
