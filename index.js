@@ -23,6 +23,8 @@ function print(room, msg) {
 }
 
 app.use(express.static(__dirname + "/public/"));
+app.use("/script", express.static(__dirname + "/node_modules/script/"));
+app.use("/style", express.static(__dirname + "/node_modules/style/"));
 
 app.get('/', function(req, res){
   res.sendfile('index.html', { root: "public/"});
