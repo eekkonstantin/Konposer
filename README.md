@@ -2,6 +2,10 @@
 ```bash
 node index.js
 ```
+or 
+```bash
+npm start
+```
 
 # Live Demo
-[Have fun!](http://kkontagion.tk:8080/)
+[Have fun!](https://konposer.azurewebsites.net/)
