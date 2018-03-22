@@ -12,7 +12,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
-var portNum = 8080;
+var portNum = process.env.PORT || 8080;
 
 // app.set('port', process.env.PORT || portNum);
 
