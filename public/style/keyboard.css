@@ -1,0 +1,59 @@
+/*black/white keys*/
+div#span-keyb > #span-bw {
+  height: 55%;
+}
+div.span-keyb .white, div.span-keyb .black {
+  cursor: pointer;
+  font-size: 150%;
+}
+div.span-keyb .white {
+  color: black;
+}
+div.span-keyb > .span-bw:not(.blank) {
+  float: left;
+  height: 100%;
+  border-left: 1px solid black;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.6);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.6);
+}
+div.span-keyb > .blank {
+  float: left;
+  height: 100%;
+  width: 14.5%;
+  border: 0;
+}
+div.span-keyb > .span-bw.white {
+  width: 6.5%;
+  background: white;
+}
+div.span-keyb > .span-bw.white.M {
+  width: 3%;
+}
+div.span-keyb > .span-bw.black {
+  width: calc(7% - 1px);
+  background: black;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+}
+
+/* white-only keys */
+div#span-keyb > #span-w {
+  height: 45%;
+}
+div.span-keyb > .span-w {
+  float:left;
+  border-left: 1px solid black;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.6);
+}
+div#span-w > .span-w {
+  width: 10%;
+  background: white;
+  height: 100%;
+}
+div#span-w > .span-w:nth-of-type(2), div#span-bw > .span-bw:nth-of-type(2) {
+  border: 0;
+}
